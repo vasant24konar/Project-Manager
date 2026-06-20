@@ -5,38 +5,11 @@ declare(strict_types=1);
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\Shop\CartController;
-use App\Http\Controllers\Shop\OrderController;
-use App\Http\Controllers\Shop\ShopController;
 use Illuminate\Support\Facades\Route;
 
-// Public redirect
-Route::get('/', fn () => redirect()->route('shop.index'));
+Route::get('/', fn () => redirect()->route('login'));
 
 require __DIR__ . '/auth.php';
-
-// ── Customer-facing shop (public) ────────────────────────────────────────────
-Route::prefix('shop')->name('shop.')->group(function () {
-    Route::get('/',          [ShopController::class, 'index'])->name('index');
-    Route::get('/{product}', [ShopController::class, 'show'])->name('show');
-});
-
-// ── Cart (customers only) ────────────────────────────────────────────────────
-Route::prefix('cart')->name('shop.')->middleware(['auth', 'role:customer'])->group(function () {
-    Route::get('/',                      [CartController::class, 'index'])->name('cart');
-    Route::post('/add/{product}',        [CartController::class, 'add'])->name('cart.add');
-    Route::patch('/update/{productId}',  [CartController::class, 'update'])->name('cart.update');
-    Route::delete('/remove/{productId}', [CartController::class, 'remove'])->name('cart.remove');
-    Route::delete('/',                   [CartController::class, 'clear'])->name('cart.clear');
-});
-
-// ── Orders (customers only) ──────────────────────────────────────────────────
-Route::prefix('orders')->name('shop.')->middleware(['auth', 'role:customer'])->group(function () {
-    Route::get('/',          [OrderController::class, 'index'])->name('orders');
-    Route::get('/checkout',  [OrderController::class, 'checkout'])->name('checkout');
-    Route::post('/checkout', [OrderController::class, 'store'])->name('checkout.store');
-    Route::get('/{order}',   [OrderController::class, 'show'])->name('order.show');
-});
 
 // ── Product management (admin + product_manager) ─────────────────────────────
 Route::middleware(['auth', 'role:admin,product_manager'])->group(function () {
@@ -45,7 +18,6 @@ Route::middleware(['auth', 'role:admin,product_manager'])->group(function () {
 
     Route::resource('products', ProductController::class);
 
-    // Manager resubmit rejected product
     Route::post('products/{product}/submit', [ProductController::class, 'submit'])->name('products.submit');
 });
 
