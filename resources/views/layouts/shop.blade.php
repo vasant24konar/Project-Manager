@@ -25,6 +25,7 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
     <style>
+        :root { --primary: #86B817; }
         #site-topbar { background: #81C408; }
         #site-navbar {
             position: sticky;
