@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In — Fruitables</title>
+    <title>Sign In — Project Manager</title>
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,21 +38,13 @@
                 <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="mailto:vasant.24konar@gmail.com" class="text-white">vasant.24konar@gmail.com</a></small>
                 <small><i class="fas fa-phone-alt me-2 text-secondary"></i><a href="tel:+919316662350" class="text-white">+91 9316662350</a></small>
             </div>
-            <div class="top-link pe-2">
-                <a href="{{ route('shop.index') }}" class="text-white"><small class="text-white ms-2">Browse Shop</small></a>
-            </div>
         </div>
     </div>
     <div class="container px-0">
         <nav class="navbar navbar-light bg-white navbar-expand-xl">
-            <a href="{{ route('shop.index') }}" class="navbar-brand">
-                <h1 class="text-primary display-6">Fruitables</h1>
+            <a href="{{ route('login') }}" class="navbar-brand">
+                <h1 class="text-primary display-6">Project Manager</h1>
             </a>
-            <div class="d-flex m-3 me-0">
-                <a href="{{ route('shop.index') }}" class="btn border border-secondary rounded-pill px-3 text-primary">
-                    <i class="fa fa-store me-2 text-primary"></i>Shop
-                </a>
-            </div>
         </nav>
     </div>
 </div>
@@ -62,7 +54,6 @@
 <div class="container-fluid page-header py-5">
     <h1 class="text-center text-white display-6">Sign In</h1>
     <ol class="breadcrumb justify-content-center mb-0">
-        <li class="breadcrumb-item"><a href="{{ route('shop.index') }}">Home</a></li>
         <li class="breadcrumb-item active text-white">Sign In</li>
     </ol>
 </div>
@@ -110,15 +101,6 @@
                         </button>
                     </form>
 
-                    <div class="text-center my-3">
-                        <span class="text-muted small">— or —</span>
-                    </div>
-
-                    <a href="{{ route('otp.request.form') }}"
-                       class="btn border-2 border-secondary rounded-pill px-4 py-3 text-primary w-100 fw-semibold">
-                        <i class="fa fa-envelope me-2 text-primary"></i>Login with OTP (No password needed)
-                    </a>
-
                     <hr class="my-4">
 
                     <h5 class="mb-3">Demo Accounts</h5>
@@ -142,11 +124,6 @@
                                     <td>manager@example.com</td>
                                     <td>Manager@1234</td>
                                 </tr>
-                                <tr>
-                                    <td><span class="badge rounded-pill" style="background:#6c757d">Customer</span></td>
-                                    <td>user@example.com</td>
-                                    <td>User@1234!</td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -164,24 +141,20 @@
     <div class="container py-5">
         <div class="row g-5">
             <div class="col-lg-4 col-md-6">
-                <h4 class="text-light mb-3">Fruitables</h4>
-                <p>Fresh fruits & vegetables delivered from farm to your door.</p>
+                <h4 class="text-light mb-3">Project Manager</h4>
+                <p>Internal product management and approval portal.</p>
             </div>
             <div class="col-lg-4 col-md-6">
                 <h4 class="text-light mb-3">Contact</h4>
                 <p><i class="fas fa-phone-alt text-primary me-2"></i>+91 9316662350</p>
                 <p><i class="fas fa-envelope text-primary me-2"></i>vasant.24konar@gmail.com</p>
             </div>
-            <div class="col-lg-4 col-md-6">
-                <h4 class="text-light mb-3">Quick Links</h4>
-                <a class="btn-link" href="{{ route('shop.index') }}">Shop</a>
-            </div>
         </div>
     </div>
 </div>
 <div class="container-fluid copyright bg-dark py-4">
     <div class="container text-center">
-        <span class="text-light"><i class="fas fa-copyright text-light me-2"></i>Fruitables &copy; {{ date('Y') }}, All rights reserved.</span>
+        <span class="text-light"><i class="fas fa-copyright text-light me-2"></i>Project Manager &copy; {{ date('Y') }}, All rights reserved.</span>
     </div>
 </div>
 <!-- Footer End -->
