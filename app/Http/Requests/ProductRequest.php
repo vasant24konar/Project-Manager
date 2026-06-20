@@ -23,7 +23,7 @@ class ProductRequest extends FormRequest
             'date_available' => ['required', 'date', 'date_format:Y-m-d'],
             'category'       => ['nullable', 'string', 'in:fruits,vegetables,dairy,bakery,other'],
             'stock'          => ['nullable', 'integer', 'min:0'],
-            'image_path'     => ['nullable', 'string', 'max:500'],
+            'image_path'     => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,gif', 'max:2048'],
         ];
     }
 

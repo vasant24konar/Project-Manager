@@ -12,7 +12,9 @@ use App\Models\User;
 use App\Services\ProductService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
@@ -35,7 +37,12 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request): RedirectResponse
     {
-        $product = $this->productService->createProduct($request->validated());
+        $validated = $request->validated();
+        $validated['image_path'] = $request->hasFile('image_path')
+            ? $this->storeImage($request->file('image_path'))
+            : null;
+
+        $product = $this->productService->createProduct($validated);
 
         if ($product->isPending()) {
             $this->notifyAdminsOfSubmission($product);
@@ -65,8 +72,15 @@ class ProductController extends Controller
     {
         $this->authorizeModification($product);
 
+        $validated = $request->validated();
+        if ($request->hasFile('image_path')) {
+            $validated['image_path'] = $this->storeImage($request->file('image_path'));
+        } else {
+            unset($validated['image_path']);
+        }
+
         $wasRejected = $product->isRejected();
-        $this->productService->updateProduct($product, $request->validated());
+        $this->productService->updateProduct($product, $validated);
         $product->refresh();
 
         if ($wasRejected && $product->isPending()) {
@@ -149,6 +163,16 @@ class ProductController extends Controller
         $this->notifyAdminsOfSubmission($product);
 
         return back()->with('success', 'Product resubmitted for approval. Admin will review it shortly.');
+    }
+
+    private function storeImage(UploadedFile $file): string
+    {
+        $dir = public_path('img/products');
+        File::ensureDirectoryExists($dir);
+        $filename = uniqid('product_', true) . '.' . $file->getClientOriginalExtension();
+        $file->move($dir, $filename);
+
+        return 'img/products/' . $filename;
     }
 
     private function authorizeModification(Product $product): void

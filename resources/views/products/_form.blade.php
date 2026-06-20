@@ -52,12 +52,18 @@
 
 <div class="row g-3 mb-3">
     <div class="col-md-6">
-        <label for="image_path" class="form-label fw-semibold">Image Path</label>
-        <input type="text" id="image_path" name="image_path"
-               value="{{ old('image_path', $product->image_path ?? '') }}"
-               class="form-control @error('image_path') is-invalid @enderror"
-               placeholder="img/fruite-item-1.jpg">
-        <div class="form-text">Relative path from <code>public/</code>, e.g. <code>img/fruite-item-1.jpg</code></div>
+        <label for="image_path" class="form-label fw-semibold">Product Image</label>
+        @if(!empty($product->image_path ?? null))
+            <div class="mb-2">
+                <img src="{{ asset($product->image_path) }}" alt="Current image"
+                     style="height:100px;object-fit:cover;border-radius:.5rem;border:2px solid #e5e7eb">
+                <div class="form-text">Current image — upload a new one to replace it</div>
+            </div>
+        @endif
+        <input type="file" id="image_path" name="image_path"
+               accept="image/jpeg,image/png,image/jpg,image/webp,image/gif"
+               class="form-control @error('image_path') is-invalid @enderror">
+        <div class="form-text">JPEG, PNG, WebP or GIF — max 2 MB</div>
         @error('image_path')<div class="invalid-feedback">{{ $message }}</div>@enderror
     </div>
     <div class="col-md-6">
@@ -69,12 +75,3 @@
         @error('date_available')<div class="invalid-feedback">{{ $message }}</div>@enderror
     </div>
 </div>
-
-{{-- Image preview --}}
-@if(!empty($product->image_path ?? null))
-<div class="mb-3">
-    <img src="{{ asset($product->image_path) }}" alt="Current image"
-         style="height:120px;object-fit:cover;border-radius:.5rem;border:2px solid #e5e7eb">
-    <div class="form-text">Current image</div>
-</div>
-@endif
